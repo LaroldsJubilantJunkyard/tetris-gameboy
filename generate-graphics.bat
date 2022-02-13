@@ -26,11 +26,6 @@ SET PNG2ASSET=C:/gbdk/bin/png2asset
 
 
 :: move .h files to their proper location
-FOR /R "source/gen/bank1/graphics/" %%X IN (*.h) DO (
-    move "%%X" "%cd%/headers/gen/graphics/"
-)
-
-:: move .h files to their proper location
 FOR /R "source/gen/graphics/" %%X IN (*.h) DO (
     move "%%X" "%cd%/headers/gen/graphics/"
 )
