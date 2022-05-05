@@ -67,7 +67,7 @@ void SetupUserInterface(){
 
 
 void AnimateBackground(){
-     tileAnimationCounter+=5;
+    tileAnimationCounter+=6;
     if(tileAnimationCounter>=128)tileAnimationCounter=0;
     set_bkg_data(TILEANIMATION_TILE1_VRAM, 1, TileAnimation_tiles+(tileAnimationCounter>>4)*16);
     set_bkg_data(TILEANIMATION_TILE2_VRAM, 1, TileAnimation_tiles+128+(tileAnimationCounter>>4)*16);

@@ -4,7 +4,7 @@
 #include "hud.h"
 #include "Tetrominos.h"
 
-uint8_t IsRowFullBoth(uint8_t j,uint8_t both){
+uint8_t IsRowFull(uint8_t j,uint8_t both){
 
     // Return 0 if any items in the row are zero
     for (uint8_t i = 0; i < 10; i++){
@@ -21,10 +21,6 @@ uint8_t IsRowFullBoth(uint8_t j,uint8_t both){
     return 1;
 }
 
-uint8_t IsRowFull(uint8_t j){
-
-    return IsRowFullBoth(j,FALSE);
-}
 
 void ShiftAllTilesAboveThisRowDown(uint8_t j)
 {
@@ -45,7 +41,7 @@ void ShiftAllTilesDown(){
     for (uint8_t j = 17; j != 255; j--)
     {
         // While this row is full
-        while (IsRowFull(j)){
+        while (IsRowFull(j,FALSE)){
             
             // Shift all above rows down
             ShiftAllTilesAboveThisRowDown(j);
@@ -68,7 +64,7 @@ void BlinkFullRows(){
     {
         // The 'IsRowFull' unction checks the background tiles, which may be set to empty for the flashing
         // Check of our index is in the 'clearRows' variable.
-        if (IsRowFull(j)){
+        if (IsRowFull(j,FALSE)){
 
             isBlinking=TRUE;
 
@@ -93,7 +89,7 @@ void BlinkFullRows(){
             {
                 // We need to check both the window and background
                 // Since the background will be blank every other iteration of the k for-loop
-                if (IsRowFullBoth(j,TRUE)){
+                if (IsRowFull(j,TRUE)){
 
                     if(k%2==0){
 

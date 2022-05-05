@@ -68,7 +68,7 @@ uint8_t PickNewTetromino(){
 
     // Do we not have a current tetromino?
     // Can the next tetromino be placed at it's default spot?
-    if(CanPieceBePlacedHere(nextCurrentTetromino,nextCurrentTetrominoRotation,5,1)){
+    if(CanPieceBePlacedHere(nextCurrentTetromino,nextCurrentTetrominoRotation,5,0)){
 
         currentX = 5;
         currentY = 0;

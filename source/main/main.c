@@ -19,6 +19,9 @@
 #include "graphics/UserInterface.h"
 #include "graphics/Palette.h"
 #include "graphics/Numbers.h"
+#include "hUGEDriver.h"
+
+extern const hUGESong_t tetris_music;
 
 
 void HandleInput(){
@@ -131,6 +134,15 @@ void main(void)
     SetupVRAM();
     SetupUserInterface();
 
+    NR52_REG = 0x80;
+    NR51_REG = 0xFF;
+    NR50_REG = 0x77;
+
+    __critical {
+        hUGE_init(&tetris_music);
+        add_VBL(hUGE_dosound);
+    }
+
     GameplayStart:
 
     SetupGameplay();    
@@ -168,17 +180,20 @@ void main(void)
 
                 // Increase the score
                 IncreaseScore(5);
-                SetCurrentPieceInBackground();
-                BlinkFullRows();
-                ShiftAllTilesDown();
 
+                // Transition the tiles from the tetromino sprite to thebackground
+                SetCurrentPieceInBackground();
+
+                // BLink any/all rows that are full
+                BlinkFullRows();
+
+                // Shift all tiles down from removed rows
+                ShiftAllTilesDown();
                 
-                // Hide the current tetromino at the proper position
+                // Hide the current tetromino
                 hide_metasprite(Tetrominos_metasprites[currentTetromino*4+currentTetrominoRotation],0);
 
                 currentTetromino=255;
-
-                continue;
             
             // Otherwise, if the piece can be moved down
             }else{
@@ -191,11 +206,15 @@ void main(void)
 
         }
 
-        // Handle user input
-        HandleInput();
+        if(currentTetromino!=255){
 
-        // Show the current tetromino at the proper position
-        move_metasprite(Tetrominos_metasprites[currentTetromino*4+currentTetrominoRotation],tileOffsets[currentTetromino],0,currentX*8,currentY*8);
+            // Handle user input
+            HandleInput();
+
+            // Show the current tetromino at the proper position
+            move_metasprite(Tetrominos_metasprites[currentTetromino*4+currentTetrominoRotation],tileOffsets[currentTetromino],0,currentX*8,currentY*8);
+
+        }
         
         // Wait for a vertical blank to finish
         wait_vbl_done();

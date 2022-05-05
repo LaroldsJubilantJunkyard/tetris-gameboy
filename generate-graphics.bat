@@ -7,7 +7,7 @@ mkdir "headers\gen\graphics"
 
 
 SET GBDK_HOME=C:/gbdk
-SET PNG2ASSET=C:/gbdk/bin/png2asset
+SET PNG2ASSET=%GBDK_HOME%/bin/png2asset.exe
 
 :: Tetrominos
 %PNG2ASSET% graphics\Tetromino1.png -c source\gen\graphics\Tetromino1.c -px 0 -py 0 -sx 0 -sy 0 -sw 32 -sh 32 -spr8x8 -keep_palette_order -noflip

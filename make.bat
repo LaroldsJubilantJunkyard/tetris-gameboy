@@ -11,13 +11,24 @@ mkdir dist
 
 SET GBDK_HOME=C:/gbdk
 
-SET LCC_COMPILE_BASE=%GBDK_HOME%\bin\lcc -debug -Iheaders/main -Iheaders/gen -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG
+SET LCC_COMPILE_BASE=%GBDK_HOME%\bin\lcc -debug -Iheaders/main -Ilib/hUGEDriver -Iheaders/gen -Wa-l -Wl-m -Wl-j -DUSE_SFR_FOR_REG
 SET LCC_COMPILE=%LCC_COMPILE_BASE% -c -o 
 
 :: Required to concatenate the "COMPILE_OBJECT_FILES" via a for loop
 SETLOCAL ENABLEDELAYEDEXPANSION
 
-SET "COMPILE_OBJECT_FILES="
+
+:: Assemble the hUGEDriver source into an RGBDS object file
+"lib/rgbasm.exe" -obin/hUGEDriver.obj -i.. source/asm/hUGEDriver.asm
+
+:: Convert the RGBDS object file into a GBDK object file
+"lib/rgb2sdas.exe" bin/hUGEDriver.obj
+
+
+
+
+
+SET "COMPILE_OBJECT_FILES=bin/hUGEDriver.obj.o"
 
 call generate-graphics.bat
 
