@@ -17,18 +17,7 @@ SET LCC_COMPILE=%LCC_COMPILE_BASE% -c -o
 :: Required to concatenate the "COMPILE_OBJECT_FILES" via a for loop
 SETLOCAL ENABLEDELAYEDEXPANSION
 
-
-:: Assemble the hUGEDriver source into an RGBDS object file
-"lib/rgbasm.exe" -obin/hUGEDriver.obj -i.. source/asm/hUGEDriver.asm
-
-:: Convert the RGBDS object file into a GBDK object file
-"lib/rgb2sdas.exe" bin/hUGEDriver.obj
-
-
-
-
-
-SET "COMPILE_OBJECT_FILES=bin/hUGEDriver.obj.o"
+SET "COMPILE_OBJECT_FILES=lib/hUGEDriver/hUGEDriver.obj.o"
 
 call generate-graphics.bat
 

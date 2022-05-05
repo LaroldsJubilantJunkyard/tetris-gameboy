@@ -15,7 +15,7 @@
 #include "graphics/UserInterface.h"
 #include "graphics/Numbers.h"
 
-void DrawNumber(uint8_t x,uint8_t y, uint16_t number,uint8_t digits, uint8_t offset){
+void DrawNumber(uint8_t x,uint8_t y, uint16_t number,uint8_t digits){
 	
     unsigned char buffer[]="00000000";
 
@@ -30,7 +30,7 @@ void DrawNumber(uint8_t x,uint8_t y, uint16_t number,uint8_t digits, uint8_t off
     // Increase the VRAM address each iteration to move to the next tile
     for(uint8_t i=0;i<digits-len;i++){
         VBK_REG=1; set_bkg_tile_xy(x,y,4);
-        VBK_REG=0;set_bkg_tile_xy(x++,y,offset);
+        VBK_REG=0;set_bkg_tile_xy(x++,y,NUMBERS_TILES_START);
     }
         
     // Draw our number
@@ -38,16 +38,16 @@ void DrawNumber(uint8_t x,uint8_t y, uint16_t number,uint8_t digits, uint8_t off
     for(uint8_t i=0;i<len;i++){
         
         VBK_REG=1;set_bkg_tile_xy(x,y,4);
-        VBK_REG=0;set_bkg_tile_xy(x++,y,(buffer[i]-'0')+offset);
+        VBK_REG=0;set_bkg_tile_xy(x++,y,(buffer[i]-'0')+NUMBERS_TILES_START);
     }
 }
 
 
 void UpdateGui(){
 
-    DrawNumber(14,10,score,5,NUMBERS_TILES_START);
-    DrawNumber(14,13,level,2,NUMBERS_TILES_START);
-    DrawNumber(14,16,lines,2,NUMBERS_TILES_START);
+    DrawNumber(14,10,score,5);
+    DrawNumber(14,13,level,2);
+    DrawNumber(14,16,lines,2);
 
     move_metasprite(Tetrominos_metasprites[nextCurrentTetromino*4+nextCurrentTetrominoRotation],tileOffsets[nextCurrentTetromino],16,124,36);
 }
